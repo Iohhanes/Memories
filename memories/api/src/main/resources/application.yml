@@ -1,4 +1,24 @@
+cloud:
+  aws:
+    credentials:
+      access-key:
+      secret-key:
+    region: "us-east-2"
+
+memories:
+  temp-folder:
+    path: src/main/resources/
+    temp-file-prefix: tempFile
+  bucket:
+    name: projectmemories
+
 spring:
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2MB
+      max-file-size: 5MB
+      max-request-size: 10MB
   data:
     mongodb:
       uri: mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb

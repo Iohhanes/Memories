@@ -1,4 +1,4 @@
-package com.example.memories;
+package project.memories;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

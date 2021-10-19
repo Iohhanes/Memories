@@ -1,10 +1,10 @@
-package com.example.memories.services.impl;
+package project.memories.services.impl;
 
-import com.example.memories.mappers.AddPostRequestMapper;
-import com.example.memories.models.Post;
-import com.example.memories.models.dto.AddPostRequest;
-import com.example.memories.repository.PostRepository;
-import com.example.memories.services.PostService;
+import project.memories.mappers.AddPostMapper;
+import project.memories.models.Post;
+import project.memories.models.dto.request.AddPostDto;
+import project.memories.repository.PostRepository;
+import project.memories.services.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
-    private final AddPostRequestMapper addPostRequestMapper;
+    private final AddPostMapper addPostRequestMapper;
 
     @Override
     public Post findById(String id) {
@@ -28,8 +28,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post create(AddPostRequest addPostRequest) {
-        Post newPost = addPostRequestMapper.from(addPostRequest);
+    public Post create(AddPostDto addPostDto) {
+        Post newPost = addPostRequestMapper.from(addPostDto);
         return postRepository.save(newPost);
     }
 }
