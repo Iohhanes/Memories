@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
+
+import static project.memories.constants.PageableConstants.*;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -29,12 +32,16 @@ public class PostController {
     }
 
     @GetMapping
-    public List<PostDto> findAll(@RequestParam int page, @RequestParam int size) {
-        List<Post> posts = postService.findAll(PageRequest.of(page, size));
+    public List<PostDto> findAll(@RequestParam(required = false) Integer page,
+                                 @RequestParam(required = false) Integer size) {
+        List<Post> posts = postService.findAll(PageRequest.of(
+                Optional.ofNullable(page).orElse(DEFAULT_PAGE_INDEX),
+                Optional.ofNullable(size).orElse(DEFAULT_PAGE_SIZE))
+        );
         return postMapper.from(posts);
     }
 
-    @PostMapping( "/create")
+    @PostMapping("/create")
     public PostDto create(@RequestPart("request") MultipartFile addPostDtoJson,
                           @RequestPart(value = "files", required = false) List<MultipartFile> files) throws IOException {
         AddPostDto addPostDto = objectMapper.readValue(addPostDtoJson.getBytes(), AddPostDto.class);

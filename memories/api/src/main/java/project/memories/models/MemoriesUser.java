@@ -1,21 +1,18 @@
 package project.memories.models;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
-
 @Data
-@Document("mem_posts")
+@Document("mem_users")
 @AllArgsConstructor
-public class Post {
+@Builder
+public class MemoriesUser {
     @Id
     private String id;
-    private String description;
-    @DBRef
-    private MemoriesUser author;
-    private List<String> imageFilenames;
+    private String username;
+    private String email;
 }
