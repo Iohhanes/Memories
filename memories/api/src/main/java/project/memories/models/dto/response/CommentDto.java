@@ -9,10 +9,8 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class PostDto extends BaseMemoriesUserPropertyDto {
-    private String description;
-    private List<String> images;
-    private List<CommentDto> comments;
+public class CommentDto extends BaseMemoriesUserPropertyDto {
+    private String text;
     private int countOfLikes;
     private List<BaseMemoriesUserPropertyDto> likes;
 }

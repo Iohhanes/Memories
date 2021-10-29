@@ -13,23 +13,17 @@ import project.memories.services.StorageService;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",
+        config = BaseUserPropertyMapper.class,
+        uses = {CommentMapper.class, PostLikeMapper.class})
 public abstract class PostMapper {
     @Autowired
     private StorageService storageService;
 
-    @Mapping(target = "author", ignore = true)
     @Mapping(target = "images", ignore = true)
     public abstract PostDto from(Post source);
 
     public abstract List<PostDto> from(List<Post> sources);
-
-    @AfterMapping
-    protected void mapAuthor(@MappingTarget PostDto target, Post source) {
-        if (source != null && source.getAuthor() != null) {
-            target.setAuthor(source.getAuthor().getUsername());
-        }
-    }
 
     @AfterMapping
     protected void mapImages(@MappingTarget PostDto target, Post source) {

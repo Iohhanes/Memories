@@ -20,6 +20,7 @@ public abstract class AddPostMapper {
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", expression = "java(java.util.UUID.randomUUID().toString())")
     @Mapping(target = "description", source = "source.description")
+    @Mapping(target = "countOfLikes", constant = "0")
     public abstract Post from(AddPostDto source);
 
     @AfterMapping
