@@ -1,16 +1,21 @@
-# Compiled class file
-*.class
+######################
+# API
+######################
+/memories/api/target
 
-# Log file
-*.log
+######################
+# Node
+######################
+node_tmp/
+node_modules/
+npm-cache/
+npm-debug.log.*
+/.awcache/*
+/.cache-loader/*
 
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
+######################
+# Package Files
+######################
 *.jar
 *.war
 *.nar
@@ -19,5 +24,54 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+######################
+# IntelliJ
+######################
+.idea/
+*.iml
+*.iws
+*.ipr
+*.ids
+*.orig
+classes/
+out/
+
+######################
+# Visual Studio Code
+######################
+.vscode/
+
+######################
+# Maven
+######################
+.mvn
+mvnw
+mvnw.cmd
+
+####################2##
+# Gradle
+######################
+.gradle/
+/build/
+
+######################
+# Windows
+######################
+# Windows image file caches
+Thumbs.db
+
+######################
+# Mac OSX
+######################
+.DS_Store
+.svn
+
+######################
+# Logs
+######################
+*.log*
+
+######################
+# ESLint
+######################
+.eslintcache

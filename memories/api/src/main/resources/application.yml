@@ -1,5 +1,36 @@
+cloud:
+  aws:
+    credentials:
+      access-key:
+      secret-key:
+    region: "us-east-2"
+
+memories:
+  logging:
+    tracing-aspect-enabled: true
+  temp-folder:
+    path: src/main/resources/
+    temp-file-prefix: tempFile
+  bucket:
+    name: projectmemories
+
+
 spring:
+  application:
+    name: memories
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2MB
+      max-file-size: 5MB
+      max-request-size: 10MB
   data:
     mongodb:
       uri: mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb
       database: memories
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8180/auth/realms/memories-realm/protocol/openid-connect/certs
+          issuer-uri: http://localhost:8180/auth/realms/memories-realm
