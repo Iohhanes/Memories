@@ -5,6 +5,7 @@ import keycloak from "./security/keycloak";
 import MemoriesApp from "./components/memories-app";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
+import "./styles/styles.less";
 
 ReactDOM.render(
   <React.StrictMode>
