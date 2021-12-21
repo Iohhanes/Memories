@@ -1,0 +1,43 @@
+{
+  "realm" : "memories-realm",
+  "users" : [ {
+    "id" : "fc1e40fb-65dd-4337-b942-3e680af8c4f9",
+    "createdTimestamp" : 1634909471615,
+    "username" : "iohhanes",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "Ivan",
+    "lastName" : "Mazurenka",
+    "email" : "test@mail.ru",
+    "credentials" : [ {
+      "id" : "f3c7e8a1-ff5a-4c9e-bf94-a61f985e42c2",
+      "type" : "password",
+      "createdDate" : 1634909550177,
+      "secretData" : "{\"value\":\"33iY64RvzCLxXUr4YDLaNoiHCbuA3gMH8C4RAH9wj2Sl4vfrqYc155wSlj+i/UZkh3lPJnDKdxSYwpe4IkP1Kg==\",\"salt\":\"Q+3ND9n3wUWYAlBV7m8jrg==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "USER" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "d0c60848-55c0-4c70-b95c-84b26148bd9f",
+    "createdTimestamp" : 1634946337890,
+    "username" : "service-account-memories-client",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "serviceAccountClientId" : "memories-client",
+    "credentials" : [ ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "default-roles-memories-realm" ],
+    "clientRoles" : {
+      "memories-client" : [ "uma_protection" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  } ]
+}

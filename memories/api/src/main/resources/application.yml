@@ -32,5 +32,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: http://localhost:8180/auth/realms/memories-realm/protocol/openid-connect/certs
           issuer-uri: http://localhost:8180/auth/realms/memories-realm
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+
+server:
+  port: 8280

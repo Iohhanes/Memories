@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button } from "antd";
+import AntButton from "antd/lib/button/index";
 import clsx from "clsx";
 
 const MemButton = ({
@@ -11,22 +11,22 @@ const MemButton = ({
   ...rest
 }) => {
   return (
-    <Button
+    <AntButton
       className={clsx("taButton", className)}
       type={type}
       disabled={disabled}
       {...rest}
     >
       {children}
-    </Button>
+    </AntButton>
   );
 };
 
 MemButton.propTypes = {
   className: PropTypes.string,
   type: PropTypes.string,
-  disabled: PropTypes.bool,
-  ...Button.propTypes
+  disabled: PropTypes.bool.isRequired,
+  ...AntButton.propTypes
 };
 
 export default MemButton;

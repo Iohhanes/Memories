@@ -16,6 +16,5 @@ public class PostLikeServiceImpl implements PostLikeService {
     @Override
     public List<PostLike> findByPost(String postId, int offset, int limit) {
         return postLikeRepository.findByPostId(postId, offset, limit);
-
     }
 }

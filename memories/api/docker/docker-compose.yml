@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  mem-api:
+    build:
+      context: ../
+      dockerfile: ./docker/dockerfiles/mem-api.Dockerfile
+    container_name: "mem-api"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/?gssapiServiceName=mongodb
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=http://keycloak:8080/auth/realms/memories-realm
+    ports:
+      - "8280:8280"
+    restart: always
+    depends_on:
+      - db
+      - keycloak
+
+  db:
+    image: mongo
+    container_name: "mongodb"
+    ports:
+      - "27017:27017"
+    restart: always
+
+  keycloak:
+    image: jboss/keycloak:14.0.0
+    container_name: "keycloak"
+    command:
+      [
+          "-Dkeycloak.migration.action=import",
+          "-Dkeycloak.migration.provider=dir",
+          "-Dkeycloak.migration.dir=/opt/jboss/keycloak/realm-config",
+          "-Dkeycloak.migration.strategy=OVERWRITE_EXISTING",
+          "-Dkeycloak.profile.feature.upload_scripts=enabled",
+      ]
+    volumes:
+      - ./keycloak-config:/opt/jboss/keycloak/realm-config
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - DB_VENDOR=h2
+    ports:
+      - "8080:8080"

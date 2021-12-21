@@ -12,9 +12,10 @@
 	<artifactId>memories</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>memories</name>
-	<description>Demo project for Spring Boot</description>
+	<packaging>jar</packaging>
 
 	<properties>
+		<start-class>project.memories.MemoriesApplication</start-class>
 		<java.version>11</java.version>
 		<org.projectlombok.version>1.18.20</org.projectlombok.version>
 		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
@@ -112,6 +113,26 @@
 							<version>${org.mapstruct.version}</version>
 						</path>
 					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${project.parent.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>${start-class}</mainClass>
+					<fork>true</fork>
+					<finalName>${project.name}</finalName>
+					<layers>
+						<enabled>true</enabled>
+					</layers>
 				</configuration>
 			</plugin>
 		</plugins>
