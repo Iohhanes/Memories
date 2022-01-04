@@ -1,12 +1,12 @@
-import { useKeycloak } from "@react-keycloak/web";
+// import { useKeycloak } from "@react-keycloak/web";
 import React from "react";
-import MemButton from "./common/mem-button.component";
+import PostListContainer from "./posts/post-list/post-list.container.jsx";
 
 const MemoriesApp = () => {
-  const { keycloak } = useKeycloak();
+  // const { keycloak } = useKeycloak();
   return (
     <div className="App">
-      <MemButton onClick={() => keycloak.login()}>Login</MemButton>
+      <PostListContainer />
     </div>
   );
 };

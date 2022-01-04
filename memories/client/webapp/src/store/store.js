@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
+import postsReducer from "./posts/posts.slice";
 
 export const createStore = () =>
   configureStore({
-    reducer: {},
+    reducer: { posts: postsReducer },
     middleware: getDefaultMiddleware => getDefaultMiddleware()
   });
 

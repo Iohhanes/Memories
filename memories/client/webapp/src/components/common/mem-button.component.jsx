@@ -25,7 +25,7 @@ const MemButton = ({
 MemButton.propTypes = {
   className: PropTypes.string,
   type: PropTypes.string,
-  disabled: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
   ...AntButton.propTypes
 };
 

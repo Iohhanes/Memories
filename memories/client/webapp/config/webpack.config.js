@@ -48,7 +48,24 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ["babel-loader"]
+        use: [
+          {
+            loader: "babel-loader",
+            options: {
+              cacheDirectory: true,
+              plugins: ["@babel/plugin-transform-runtime"]
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(jpe?g|png|gif|woff2?|ttf|eot)$/i,
+        loader: "file-loader",
+        options: {
+          digest: "hex",
+          hash: "sha512",
+          name: "images/[contenthash].[ext]"
+        }
       },
       ...lessLoaders(["style-loader"])
     ]
