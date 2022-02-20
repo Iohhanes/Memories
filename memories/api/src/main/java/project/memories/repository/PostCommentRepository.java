@@ -2,8 +2,8 @@ package project.memories.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-import project.memories.models.CommentLike;
+import project.memories.models.PostComment;
 
 @Repository
-public interface CommentLikeRepository extends MongoRepository<CommentLike, String> {
+public interface PostCommentRepository extends MongoRepository<PostComment, String> {
 }

@@ -1,18 +1,25 @@
 package project.memories.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import project.memories.mappers.PostMapper;
+import project.memories.mappers.request.AddCommentMapper;
+import project.memories.mappers.request.AddPostMapper;
+import project.memories.mappers.response.PostMapper;
 import project.memories.models.Post;
+import project.memories.models.dto.request.AddCommentDto;
 import project.memories.models.dto.request.AddPostDto;
 import project.memories.models.dto.response.PostDto;
+import project.memories.services.PostCommentService;
+import project.memories.services.PostLikeService;
 import project.memories.services.PostService;
-import project.memories.utils.JsonMappingUtils;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,32 +29,53 @@ import static project.memories.constants.PageableConstants.DEFAULT_PAGE_SIZE;
 @RestController
 @RequestMapping("/api/posts")
 @RequiredArgsConstructor
+@Slf4j
 public class PostController {
     private final PostService postService;
+    private final PostLikeService postLikeService;
+    private final PostCommentService postCommentService;
+    private final AddPostMapper addPostRequestMapper;
+    private final AddCommentMapper addCommentRequestMapper;
     private final PostMapper postMapper;
-    private final JsonMappingUtils jsonMappingUtils;
+    private final ObjectMapper objectMapper;
 
     @GetMapping
     public List<PostDto> findAll(@RequestParam(required = false) Integer page,
                                  @RequestParam(required = false) Integer size) {
-        List<Post> posts = postService.findAll(PageRequest.of(
+        return postMapper.from(postService.findAll(PageRequest.of(
                 Optional.ofNullable(page).orElse(DEFAULT_PAGE_INDEX),
                 Optional.ofNullable(size).orElse(DEFAULT_PAGE_SIZE))
-        );
-        return postMapper.from(posts);
+        ));
+
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestPart("request") MultipartFile addPostDtoJson,
-                                    @RequestPart(value = "files", required = false) List<MultipartFile> files) {
-        AddPostDto addPostDto = jsonMappingUtils.readObjectFromMultiPart(addPostDtoJson, AddPostDto.class);
-        if (addPostDto == null) {
+    @PostMapping("/add")
+    public ResponseEntity<?> add(@RequestPart("requestBody") MultipartFile addPostDtoJson,
+                                 @RequestPart(value = "images", required = false) List<MultipartFile> images) {
+        AddPostDto addPostDto = new AddPostDto();
+        try {
+            if (addPostDtoJson != null && !addPostDtoJson.isEmpty()) {
+                addPostDto = objectMapper.readValue(addPostDtoJson.getBytes(), AddPostDto.class);
+            }
+        } catch (IOException exception) {
+            log.error("Error while reading json: {}", exception.getMessage());
             return ResponseEntity
                     .status(HttpStatus.UNPROCESSABLE_ENTITY)
-                    .body("Post request is invalid");
+                    .body("Request body is invalid");
         }
-        addPostDto.setFiles(files);
-        Post post = postService.create(addPostDto);
+
+        addPostDto.setImages(images);
+        Post post = postService.add(addPostRequestMapper.from(addPostDto));
         return ResponseEntity.status(HttpStatus.OK).body(postMapper.from(post));
+    }
+
+    @PostMapping("/{postId}/like")
+    public long like(@PathVariable String postId) {
+        return postLikeService.likePost(postId);
+    }
+
+    @PostMapping("/{postId}/comment")
+    public void comment(@PathVariable String postId, @RequestBody AddCommentDto addCommentDto) {
+        postCommentService.add(postId, addCommentRequestMapper.from(addCommentDto));
     }
 }

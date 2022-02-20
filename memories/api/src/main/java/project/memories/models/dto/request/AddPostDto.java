@@ -8,6 +8,5 @@ import java.util.List;
 @Data
 public class AddPostDto {
     private String description;
-    private String author;
-    List<MultipartFile> files;
+    List<MultipartFile> images;
 }

@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class BaseMemoriesUserPropertyDto {
+public class BaseMemoriesUserPropertyResponseDto {
     private String id;
-    private String author;
+    private AuthorDto author;
 }

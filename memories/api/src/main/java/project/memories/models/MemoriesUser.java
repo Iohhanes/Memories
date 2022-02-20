@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 public class MemoriesUser {
     @Id
-    private String id;
     private String username;
     private String email;
+    private String profile;
 }

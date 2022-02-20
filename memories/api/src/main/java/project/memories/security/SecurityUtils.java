@@ -2,19 +2,26 @@ package project.memories.security;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import project.memories.models.MemoriesUser;
 import project.memories.models.MemoriesUserClaimKey;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SecurityUtils {
+
+    public static Optional<MemoriesUser> getCurrentMemoriesUser() {
+        return Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
+                .map(Authentication::getPrincipal)
+                .map(principal -> (Jwt) principal)
+                .map(jwt -> extractUserInfoFromClaims(jwt.getClaims()));
+    }
 
     public static MemoriesUser extractUserInfoFromClaims(Map<String, Object> claims) {
         return MemoriesUser.builder()

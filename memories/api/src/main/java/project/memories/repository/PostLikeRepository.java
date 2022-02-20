@@ -5,10 +5,10 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 import project.memories.models.PostLike;
 
-import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PostLikeRepository extends MongoRepository<PostLike, String> {
-    @Query("db.mem_post_likes.find({ query: { 'post' : ?0}).limit(?2).skip(?1)")
-    List<PostLike> findByPostId(String postId, int offset, int limit);
+    @Query("{'post.$id' : ObjectId(?0), 'author.$id': ?1 }")
+    Optional<PostLike> findByPostAndAuthor(String postId, String author);
 }
